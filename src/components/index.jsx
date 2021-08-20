@@ -1,0 +1,11 @@
+export {default as Account} from './Account';
+export {default as Activities} from './Activities';
+export {default as Home} from './Home';
+export {default as Login} from './Login';
+export {default as MyRoutines} from './MyRoutines';
+export {default as MyRoutinesActivitiesForm} from './MyRoutinesActivitiesForm';
+export {default as MyRoutinesForm} from './MyRoutinesForm';
+export {default as MyRoutinesItem} from './MyRoutinesItem';
+export {default as MyRoutinesItemEdit} from './MyRoutinesItemEdit';
+export {default as Register} from './Register';
+export {default as Routines} from './Routines';
