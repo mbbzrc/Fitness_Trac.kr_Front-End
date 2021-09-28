@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://secret-peak-53848.herokuapp.com';
+export const BASE_URL = 'https://fitness-trackr-usd-2103.herokuapp.com';
 
 function createHeaders() {
     if (localStorage.getItem('token')) {
