@@ -10,10 +10,7 @@ import { clearCurrentUser } from "../auth";
 const Account = ({ currentUser, setCurrentUser }) => {
   const handleLogout = () => {
     clearCurrentUser();
-    setCurrentUser({
-      username: "",
-      loggedIn: false,
-    });
+    setCurrentUser(null);
   };
 
   useEffect(() => {
@@ -22,7 +19,7 @@ const Account = ({ currentUser, setCurrentUser }) => {
 
   return (
     <div className="account">
-      {currentUser.loggedIn ? (
+      {currentUser ? (
         <>
           <h2>welcome, {currentUser.username}</h2>
           <div>

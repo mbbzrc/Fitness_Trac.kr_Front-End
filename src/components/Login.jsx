@@ -25,8 +25,8 @@ const Login = ({ setCurrentUser }) => {
     }
 
     try {
-      await loginUser(username, password);
-      setCurrentUser({ username: username, loggedIn: true });
+      const user = await loginUser(username, password);
+      setCurrentUser(user);
     } catch ({ name, message }) {
       setErrorMessage(message);
       console.error(name, message);

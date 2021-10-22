@@ -47,8 +47,8 @@ const Register = ({ setCurrentUser }) => {
         setErrorMessage("Something's not right! Please check and try again.");
         return;
       } else {
-        await registerUser(username, password);
-        setCurrentUser({ username: username, loggedIn: true });
+        const user = await registerUser(username, password);
+        setCurrentUser(user);
       }
     } catch ({ name, message }) {
       setErrorMessage(message);

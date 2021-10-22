@@ -1,30 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
-import { checkToken, getCurrentUser } from "./auth";
+// import { checkToken, getCurrentUser } from "./auth";
 
 import { Routines, MyRoutines, Activities, Account, Home } from "./components";
 
 const App = () => {
-  const getStoredUsername = () => {
-    if (getCurrentUser()) {
-      const storedUser = getCurrentUser();
-      if (storedUser.hasOwnProperty("username")) {
-        const storedUsername = storedUser.username;
-        return storedUsername;
-      } else {
-        return "";
-      }
-    } else {
-      return "";
-    }
-  };
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser")) || null
+  );
 
-  const [currentUser, setCurrentUser] = useState({
-    username: getStoredUsername(),
-    loggedIn: checkToken() ? true : false,
-  });
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+  }, [currentUser]);
 
   return (
     <div className="app">
@@ -33,13 +24,9 @@ const App = () => {
         <nav>
           <Link to="/">Home</Link>
           <Link to="/routines">Routines</Link>
-          {currentUser.loggedIn ? (
-            <Link to="/my-routines">My Routines</Link>
-          ) : null}
+          {currentUser && <Link to="/my-routines">My Routines</Link>}
           <Link to="/activities">Activities</Link>
-          <Link to={currentUser.loggedIn ? "/account" : "/account/login"}>
-            Account
-          </Link>
+          <Link to={currentUser ? "/account" : "/account/login"}>Account</Link>
         </nav>
         <Switch>
           <Route path="/routines">
