@@ -9,9 +9,8 @@ import {
 import MyRoutinesActivitiesForm from "./MyRoutinesActivitiesForm";
 
 const MyRoutinesItemEdit = ({
-  fetchData,
-  pendingActivities,
-  setPendingActivities,
+  myRoutinesList,
+  setMyRoutinesList,
   checkRoutineList,
   setToggle,
   toggle,
@@ -26,9 +25,11 @@ const MyRoutinesItemEdit = ({
     isPublic: isPublic,
   };
 
-  const [form, setForm] = useState({ ...initialState });
-
   const [routineActivities, setRoutineActivities] = useState([]);
+
+  const [pendingActivities, setPendingActivities] = useState([]);
+
+  const [form, setForm] = useState({ ...initialState });
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -82,10 +83,13 @@ const MyRoutinesItemEdit = ({
           )
         );
       }
-      await updateRoutine(name, goal, isPublic, id);
+      const updatedRoutine = await updateRoutine(name, goal, isPublic, id);
+      const itemIndex = myRoutinesList.findIndex((item) => item.id == id);
+      const newList = [...myRoutinesList];
+      newList.splice(itemIndex, 1, updatedRoutine);
+      setMyRoutinesList(newList);
       setPendingActivities([]);
       setToggle(!toggle);
-      fetchData();
     } catch (error) {
       console.error(error);
     }
@@ -95,7 +99,6 @@ const MyRoutinesItemEdit = ({
     setToggle(!toggle);
     setForm({ ...initialState });
     setPendingActivities([]);
-    fetchData();
   };
 
   const handleDelete = async (routineActivityId) => {

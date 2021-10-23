@@ -57,9 +57,9 @@ const Activities = ({ currentUser }) => {
       return;
     }
     try {
-      await createActivity(name, description);
+      const newActivity = await createActivity(name, description);
       setForm({ name: "", description: "" });
-      fetchData();
+      setActivityList([...activityList, newActivity]);
     } catch (error) {
       setErrorMessage(error.message);
       console.error(error);
@@ -67,8 +67,13 @@ const Activities = ({ currentUser }) => {
   };
 
   const handleDelete = async (id) => {
-    await deleteActivity(id);
-    fetchData();
+    try {
+      await deleteActivity(id);
+      const newList = activityList.filter((item) => item.id !== id);
+      setActivityList(newList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -77,11 +82,11 @@ const Activities = ({ currentUser }) => {
       <p>
         Welcome to Fitness Trac.kr activities! Check out our fitness database
         below.{" "}
-        {currentUser.loggedIn
+        {currentUser
           ? "These activities are visible to all users, so anything you create can be used to customize a new routine."
           : null}
       </p>
-      {currentUser.loggedIn ? (
+      {currentUser ? (
         <>
           <h3>Create New Activity</h3>
           <form className="form-create">

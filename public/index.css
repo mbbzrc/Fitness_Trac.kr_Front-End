@@ -22,6 +22,16 @@ h1 {
   font-family: "Comfortaa", cursive;
   font-weight: bold;
   font-size: 3rem;
+  margin-top: 1%;
+}
+
+#logo {
+  height: 5rem;
+}
+
+#title {
+  display: flex;
+  align-items: center;
 }
 
 h2 {
@@ -49,7 +59,6 @@ h4 {
   color: rgb(222, 222, 222);
   font-weight: bold;
   font-size: 1.4rem;
-  /* margin: 15px 0px; */
 }
 
 p {
@@ -97,7 +106,7 @@ footer {
 }
 
 .app > div {
-  margin-bottom: 20%;
+  margin-bottom: 5%;
 }
 
 .account {
@@ -303,6 +312,14 @@ textarea:focus {
 @media screen and (max-width: 480px) {
   html {
     font-size: 12px;
+  }
+
+  #logo {
+    height: 3rem;
+  }
+
+  h1 {
+    font-size: 2rem;
   }
 
   nav a {

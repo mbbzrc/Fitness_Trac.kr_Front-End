@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import { createRoutine } from "../api";
 
-const MyRoutinesForm = ({ fetchData, checkRoutineList }) => {
+const MyRoutinesForm = ({
+  myRoutinesList,
+  setMyRoutinesList,
+  checkRoutineList,
+}) => {
   const [form, setForm] = useState({
     name: "",
     goal: "",
@@ -40,9 +44,9 @@ const MyRoutinesForm = ({ fetchData, checkRoutineList }) => {
       return;
     }
     try {
-      await createRoutine(name, goal, isPublic);
+      const newRoutine = await createRoutine(name, goal, isPublic);
       setForm({ name: "", goal: "", isPublic: false });
-      fetchData();
+      setMyRoutinesList([...myRoutinesList, newRoutine]);
     } catch (error) {
       console.error(error);
     }

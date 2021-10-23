@@ -20,16 +20,16 @@ const MyRoutinesActivitiesForm = ({
     name: "",
   });
 
-  const fetchData = async () => {
-    try {
-      const results = await fetchAllActivities();
-      setActivityList(results);
-    } catch (error) {
-      throw error;
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const results = await fetchAllActivities();
+        setActivityList(results);
+      } catch (error) {
+        throw error;
+      }
+    };
+
     fetchData();
   }, []);
 
@@ -91,8 +91,9 @@ const MyRoutinesActivitiesForm = ({
   const handleDelete = (activityId) => {
     for (let i = 0; i < activityList.length; i++) {
       if (pendingActivities[i].activityId === activityId) {
-        pendingActivities.splice(i, 1);
-        setPendingActivities([...pendingActivities]);
+        const newList = [...pendingActivities];
+        newList.splice(i, 1);
+        setPendingActivities(newList);
         return;
       }
     }

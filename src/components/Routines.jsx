@@ -4,16 +4,16 @@ import { fetchAllPublicRoutines } from "../api";
 const Routines = () => {
   const [routineList, setRoutineList] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const results = await fetchAllPublicRoutines();
-      setRoutineList(results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const results = await fetchAllPublicRoutines();
+        setRoutineList(results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchData();
   }, []);
 

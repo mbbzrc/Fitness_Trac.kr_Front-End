@@ -19,7 +19,10 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>Fitness Trac.kr</h1>
+      <div id="title">
+        <img id="logo" src="/assets/logo.png" alt="logo" />
+        <h1>Fitness Trac.kr</h1>
+      </div>
       <Router>
         <nav>
           <Link to="/">Home</Link>

@@ -4,7 +4,8 @@ import { deleteRoutine } from "../api";
 import MyRoutinesItemEdit from "./MyRoutinesItemEdit";
 
 const MyRoutinesItem = ({
-  fetchData,
+  myRoutinesList,
+  setMyRoutinesList,
   checkRoutineList,
   name,
   goal,
@@ -15,16 +16,15 @@ const MyRoutinesItem = ({
 }) => {
   const [toggle, setToggle] = useState(false);
 
-  const [pendingActivities, setPendingActivities] = useState([]);
-
   const handleEditToggle = () => {
     setToggle(!toggle);
   };
 
   const handleDelete = async (id) => {
     try {
-      const results = await deleteRoutine(id);
-      fetchData();
+      await deleteRoutine(id);
+      const newList = myRoutinesList.filter((item) => item.id !== id);
+      setMyRoutinesList(newList);
     } catch (error) {
       console.error(error);
     }
@@ -39,7 +39,7 @@ const MyRoutinesItem = ({
             <span className="card-label">Goal - </span>
             {goal}
           </p>
-          {activities.length > 0 ? (
+          {activities && activities.length > 0 ? (
             <div className="routine-activities">
               <p className="card-label">Activities </p>
               <ul>
@@ -77,9 +77,8 @@ const MyRoutinesItem = ({
         </div>
       ) : (
         <MyRoutinesItemEdit
-          fetchData={fetchData}
-          pendingActivities={pendingActivities}
-          setPendingActivities={setPendingActivities}
+          myRoutinesList={myRoutinesList}
+          setMyRoutinesList={setMyRoutinesList}
           checkRoutineList={checkRoutineList}
           toggle={toggle}
           setToggle={setToggle}

@@ -7,14 +7,18 @@ import { MyRoutinesForm, MyRoutinesItem } from "./index";
 const MyRoutines = ({ currentUser }) => {
   const [myRoutinesList, setMyRoutinesList] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const results = await fetchRoutinesByUser(currentUser.username);
-      setMyRoutinesList(results);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const results = await fetchRoutinesByUser(currentUser.username);
+        setMyRoutinesList(results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   function checkRoutineList(name) {
     const myRoutinesListLowercase = myRoutinesList.map((routine) => {
@@ -24,10 +28,6 @@ const MyRoutines = ({ currentUser }) => {
     const nameLowercase = name.toLowerCase();
     return myRoutinesListLowercase.includes(nameLowercase);
   }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <>
@@ -39,7 +39,7 @@ const MyRoutines = ({ currentUser }) => {
       </p>
       <div id="my-routines">
         <MyRoutinesForm
-          fetchData={fetchData}
+          setMyRoutinesList={setMyRoutinesList}
           myRoutinesList={myRoutinesList}
           checkRoutineList={checkRoutineList}
         />
@@ -51,9 +51,9 @@ const MyRoutines = ({ currentUser }) => {
                 return (
                   <MyRoutinesItem
                     key={id}
-                    fetchData={fetchData}
-                    checkRoutineList={checkRoutineList}
                     myRoutinesList={myRoutinesList}
+                    setMyRoutinesList={setMyRoutinesList}
+                    checkRoutineList={checkRoutineList}
                     name={name}
                     goal={goal}
                     creatorName={creatorName}
